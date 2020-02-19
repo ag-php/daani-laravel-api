@@ -1,0 +1,13 @@
+type Query {
+    users: [User!]! @paginate(defaultCount: 10)
+}
+
+
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+}
