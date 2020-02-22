@@ -2,6 +2,7 @@
 
 namespace App\Repos;
 
+use App\Services\Mail\Interfaces\CanEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,7 +17,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'api_token'
     ];
 
     /**
@@ -25,7 +29,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -41,5 +46,21 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function getApiToken() : string
+    {
+        return $this->api_token;
+    }
+
+
+    public function getEmail()
+    {
+        return $this->email;
     }
 }

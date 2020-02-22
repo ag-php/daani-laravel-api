@@ -1,9 +1,22 @@
+type Query {
+#    products: [User!]! @paginate(defaultCount: 10)
+}
 
-type Post {
+
+type Mutation {
+#    register(email : String @rules(apply: ["required","string","email","unique:users,email"]),
+#        password : String @rules(apply: ["required","string"])) : User @field(resolver: "Auth\\Register")
+
+    addProduct(email: String!, password: String): User @field(resolver:"Auth\\Login")
+
+}
+
+
+type Product {
     id: ID!
-    title: String!
-    description: String!
+    name: String!
+    description: String
+    purchase_date: Date
     created_at: DateTime!
     updated_at: DateTime!
-    comments: [Comment] @hasMany
 }

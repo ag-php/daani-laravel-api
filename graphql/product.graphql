@@ -1,0 +1,30 @@
+type Query {
+     products: [Product!]! @paginate(defaultCount: 10)
+}
+
+
+
+type Mutation {
+    addProduct(data: CreateProduct): User @field(resolver:"Auth\\Login")
+}
+
+input CreateProduct{
+    name: String! @rules(apply: ["required","string"])
+    purchase_date: String! @rules(apply: ["required","date"])
+    district: String! @rules(apply: ["required","string"])
+    full_address: String! @rules(apply: ["required","string"])
+    cat_id: Int! @rules(apply: ["required","string"])
+}
+
+
+type Product {
+    id: ID!
+    name: String!
+    description: String
+    purchase_date: DateTime
+    district: String!
+    full_address: String!
+    is_available: Int!
+    user: User
+    category: ProductCategory
+}

@@ -34,3 +34,5 @@ type Comment {
 
 
 #import user.graphql
+#import product-category.graphql
+#import product.graphql

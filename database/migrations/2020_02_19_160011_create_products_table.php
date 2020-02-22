@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->timestamp('purchase_date');
-            $table->integer('usable_date');
+            $table->dateTime('purchase_date');
+            $table->dateTime('usable_date');
             $table->string('district');
             $table->string('full_address');
             $table->string('is_available');

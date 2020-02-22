@@ -1,0 +1,12 @@
+type ProductCategory
+{
+    id: ID!
+    name: String!
+    parent_id: Int!
+    created_at: DateTime!
+    updated_at: DateTime
+}
+
+type Query {
+    product_categories: [ProductCategory]! @all
+}
