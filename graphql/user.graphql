@@ -1,11 +1,10 @@
-type Query {
+extend type Query {
     users: [User!]! @paginate(defaultCount: 10)
 }
 
 
-type Mutation {
-    register(email : String @rules(apply: ["required","string","email","unique:users,email"]),
-        password : String @rules(apply: ["required","string"])) : User @field(resolver: "Auth\\Register")
+extend type Mutation {
+    register(email : String @rules(apply: ["required","string","email","unique:users,email"]),password : String @rules(apply: ["required","string"])) : User @field(resolver: "Auth\\Register")
 
     login(email: String!, password: String): User @field(resolver:"Auth\\Login")
 
@@ -16,6 +15,7 @@ type User {
     id: ID!
     name: String
     email: String!
+    api_token: String!
     created_at: DateTime!
     updated_at: DateTime!
 }

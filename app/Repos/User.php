@@ -53,14 +53,19 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function getApiToken() : string
+    public function getApiToken(): string
     {
         return $this->api_token;
     }
 
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getId() : int
+    {
+        return $this->id;
     }
 }

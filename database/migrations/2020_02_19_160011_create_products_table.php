@@ -16,12 +16,12 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->dateTime('purchase_date');
-            $table->dateTime('usable_date');
+            $table->dateTime('usable_date')->nullable();
             $table->string('district');
             $table->string('full_address');
-            $table->string('is_available');
+            $table->string('is_available')->default(1);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

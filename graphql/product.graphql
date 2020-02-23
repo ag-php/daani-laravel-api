@@ -1,19 +1,34 @@
-type Query {
+extend type Query {
      products: [Product!]! @paginate(defaultCount: 10)
 }
 
-
-
-type Mutation {
-    addProduct(data: CreateProduct): User @field(resolver:"Auth\\Login")
+extend type Mutation @middleware(checks: ["auth:api"]){
+    addProduct(input:CreateProduct !@spread): Product @field(resolver:"Product\\Create") @inject(context: "user.id", name: "user_id")
+    updateProduct(id: ID!,input:UpdateProduct! @spread): Product @can(ability:"update",injectArgs: true,find:"id") @update
+    deleteProduct(id: ID!): Product @can(ability:"delete",injectArgs: true,find:"id") @delete
+    sold(id: ID!): Product @can(ability:"update",injectArgs: true,find:"id") @field(resolver:"Product\\Sold")
 }
 
 input CreateProduct{
-    name: String! @rules(apply: ["required","string"])
-    purchase_date: String! @rules(apply: ["required","date"])
-    district: String! @rules(apply: ["required","string"])
-    full_address: String! @rules(apply: ["required","string"])
-    cat_id: Int! @rules(apply: ["required","string"])
+    name: String! @rules(apply: ["string"])
+    purchase_date: Date!
+    district: String! @rules(apply: ["string"])
+    full_address: String! @rules(apply: ["string"])
+    cat_id: Int! @rules(apply: ["exists:product_categories,id"])
+    description: String
+    usable_date: Date
+
+}
+
+input UpdateProduct{
+    name: String
+    purchase_date: Date
+    description: String
+    district: String
+    full_address: String
+    cat_id: Int @rules(apply: ["exists:product_categories,id"])
+    description: String
+    usable_date: Date
 }
 
 
@@ -21,7 +36,7 @@ type Product {
     id: ID!
     name: String!
     description: String
-    purchase_date: DateTime
+    purchase_date: DateTime!
     district: String!
     full_address: String!
     is_available: Int!

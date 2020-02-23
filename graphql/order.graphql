@@ -1,0 +1,17 @@
+extend type Mutation @middleware(checks: ["auth:api"]){
+
+    order(product_id: Int) : Order @create
+    @inject(context: "user.id", name: "user_id")
+    @can(ability:"create",injectArgs: true)
+}
+
+
+type Order {
+    id: ID!
+    product: Product!
+    user: User!
+    completed: Int!
+    notes: String
+    created_at: DateTime!
+    updated_at: DateTime!
+}

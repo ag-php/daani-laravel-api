@@ -4,25 +4,13 @@ scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date
 "A date string with format `Y-m-d`, e.g. `2011-05-23`."
 scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
-
-
-enum orderBy {
-    asc @enum(value: "ASC")
-    desc @enum(value: "DESC")
+type Query {
+    comments : [Comment!]! @all
 }
 
 type Mutation {
-    login(email: String!, password : String!): ApiToken @field(resolver: "AuthLogin")
-    createPost(title: String! , description : String!) : Post @middleware(
-        checks: ["auth:api"]
-    ) @field(resolver:"PostMutate@create")
+    comments : [Comment!]! @all
 }
-
-type ApiToken {
-    api_token: String!
-}
-
-
 
 type Comment {
     id: ID!
@@ -33,6 +21,7 @@ type Comment {
 }
 
 
-#import user.graphql
 #import product-category.graphql
 #import product.graphql
+#import user.graphql
+#import order.graphql
