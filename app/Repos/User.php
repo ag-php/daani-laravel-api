@@ -6,6 +6,8 @@ use App\Services\Mail\Interfaces\CanEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -20,7 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'api_token'
+        'fb_id',
+        'api_token',
+        'email_verified_at'
     ];
 
     /**
@@ -58,6 +62,16 @@ class User extends Authenticatable
         return $this->api_token;
     }
 
+    public function scopeByToken($q,$token)
+    {
+        return $q->where('api_token',$token);
+    }
+
+    public function isVerified() : bool
+    {
+        return !empty($this->email_verified_at);
+    }
+
 
     public function getEmail(): string
     {
@@ -68,4 +82,25 @@ class User extends Authenticatable
     {
         return $this->id;
     }
+
+    public function scopeByFbId($q,$fbId)
+    {
+        return $q->where('fb_id', $fbId);
+    }
+
+    public function generateAuthToken() : String
+    {
+        return Str::random(20);
+    }
+
+    public function completeSuccessfulLogin() : User
+    {
+        $user = Auth::user();
+        $user->api_token = $this->generateAuthToken();
+        $user->save();
+
+        return $user;
+
+    }
+
 }

@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class UserRegistration extends Mailable
 {
@@ -25,9 +26,15 @@ class UserRegistration extends Mailable
         $this->user = $user;
     }
 
-    public function getVerificationLink()
+    public function getVerificationLink() : string
     {
-        return env('FRONTEND_APP_URL').http_build_query(['code' => base64_encode($this->user->getApiToken())]);
+        $url = env('FRONTEND_APP_URL').'?code='.base64_encode($this->user->getApiToken());
+
+        Log::info("verification token generated",[
+            'userId' => $this->user->getId()
+        ]);
+
+        return $url;
     }
     /**
      * Build the message.

@@ -4,13 +4,15 @@ namespace App\GraphQL\Mutations\Auth;
 
 use App\Events\Auth\UserRegistered;
 use App\GraphQL\Queries\User;
+use App\Services\FB\GraphApi;
+use Carbon\Carbon;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class Login
+class LoginWithFacebook
 {
     /**
      * Return a value for the field.
@@ -23,13 +25,45 @@ class Login
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $data = Arr::only($args, ['email','password']);
-        $user = new \App\Repos\User();
-        if(Auth::once($data)) {
-           return $user->completeSuccessfulLogin();
+        $token = Str::random(20);
+
+        $userRepo = new \App\Repos\User();
+
+        $graphApi = app(GraphApi::class,[
+            'accessToken' => $args['token']
+        ]);
+
+        if($userInfo = $graphApi->getUserInfo()) {
+
+            $user = $userRepo->ByFbId($userInfo['id'])->first();
+
+            if ($user) {
+                $user->update(['api_token' => $user->generateAuthToken()]);
+
+                return $user;
+            }
+
+
+            $email = isset($userInfo['email']) ?  $userInfo['email'] : null;
+
+            $data = [
+                'fb_id' => $userInfo['id'],
+                'password' => Str::random(10),
+                'api_token' => $userRepo->generateAuthToken()
+            ];
+
+            if(!empty($email)) {
+                $data['email'] = $email;
+                $data['email_verified_at'] = Carbon::now();
+            }
+
+            $user = $userRepo->create($data);
+
+            return $user;
 
         }
-        return null;
 
+
+        return null;
     }
 }

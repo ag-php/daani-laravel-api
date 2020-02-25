@@ -18,10 +18,9 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->dateTime('purchase_date');
-            $table->dateTime('usable_date')->nullable();
-            $table->string('district');
-            $table->string('full_address');
+            $table->dateTime('expiry_date')->nullable();
             $table->string('is_available')->default(1);
+            $table->string('home_delivery')->default(1);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

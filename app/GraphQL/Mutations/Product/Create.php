@@ -24,7 +24,6 @@ class Create
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-
         return Product::create($args);
     }
 }

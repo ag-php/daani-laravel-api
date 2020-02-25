@@ -7,6 +7,8 @@ extend type Mutation {
     register(email : String @rules(apply: ["required","string","email","unique:users,email"]),password : String @rules(apply: ["required","string"])) : User @field(resolver: "Auth\\Register")
 
     login(email: String!, password: String): User @field(resolver:"Auth\\Login")
+    verifyRegistration(token:String!): User @field(resolver:"Auth\\VerifyRegistration")
+    loginWithFacebook(user_id: String!, token: String!): User @field(resolver:"Auth\\LoginWithFacebook")
 
 }
 

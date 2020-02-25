@@ -4,13 +4,14 @@ namespace App\GraphQL\Mutations\Auth;
 
 use App\Events\Auth\UserRegistered;
 use App\GraphQL\Queries\User;
+use Carbon\Carbon;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class Login
+class VerifyRegistration
 {
     /**
      * Return a value for the field.
@@ -23,13 +24,14 @@ class Login
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $data = Arr::only($args, ['email','password']);
-        $user = new \App\Repos\User();
-        if(Auth::once($data)) {
-           return $user->completeSuccessfulLogin();
 
+        $user = \App\Repos\User::byToken(base64_decode($args['token']))->first();
+
+        if ($user && !$user->isVerified()) {
+            $user->update(['email_verified_at' => Carbon::now()]);
+
+            return $user;
         }
         return null;
-
     }
 }
