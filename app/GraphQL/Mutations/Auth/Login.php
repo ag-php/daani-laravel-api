@@ -29,7 +29,7 @@ class Login
            return $user->completeSuccessfulLogin();
 
         }
-        return null;
+        throw new \App\Exceptions\Login\InvalidCredentials();
 
     }
 }

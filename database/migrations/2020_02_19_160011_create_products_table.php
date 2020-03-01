@@ -17,12 +17,12 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->dateTime('purchase_date');
-            $table->dateTime('expiry_date')->nullable();
+            $table->string('used_for');
             $table->string('is_available')->default(1);
-            $table->string('home_delivery')->default(1);
+            $table->string('home_delivery')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }

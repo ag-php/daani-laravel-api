@@ -2,6 +2,7 @@
 
 namespace App\Repos;
 
+use App\Repos\Media;
 use App\Services\Mail\Interfaces\CanEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -101,6 +102,11 @@ class User extends Authenticatable
 
         return $user;
 
+    }
+
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'subject');
     }
 
 }

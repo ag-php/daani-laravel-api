@@ -19,11 +19,9 @@ class CreateMediaTable extends Migration
             $table->string('extension');
             $table->string('size');
             $table->string('name');
-            $table->json('thumbnails')->nullable();
             $table->integer('subject_id')->nullable();
             $table->string('subject_type');
             $table->string('category');
-            $table->integer('featured_index')->nullable();
             $table->string('alt_text')->nullable();
             $table->timestamps();
         });

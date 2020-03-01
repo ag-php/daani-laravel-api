@@ -11,24 +11,21 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 
 input CreateProduct{
     name: String! @rules(apply: ["string"])
-    purchase_date: Date!
-    district: String! @rules(apply: ["string"])
-    full_address: String! @rules(apply: ["string"])
+    address: String @rules(apply: ["string"])
+    used_for: String @rules(apply: ["string"])
+    home_delivery: Int
     cat_id: Int! @rules(apply: ["exists:product_categories,id"])
     description: String
-    usable_date: Date
 
 }
 
 input UpdateProduct{
     name: String
-    purchase_date: Date
     description: String
-    district: String
-    full_address: String
+    address: String
     cat_id: Int @rules(apply: ["exists:product_categories,id"])
     description: String
-    usable_date: Date
+    used_for: String
 }
 
 
@@ -36,9 +33,9 @@ type Product {
     id: ID!
     name: String!
     description: String
-    purchase_date: DateTime!
-    district: String!
-    full_address: String!
+    address: String!
+    used_for: String!
+    home_delivery: String!
     is_available: Int!
     user: User
     category: ProductCategory

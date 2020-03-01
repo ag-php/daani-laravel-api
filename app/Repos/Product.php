@@ -8,14 +8,13 @@ class Product extends Model
 {
     protected $fillable = [
         'name',
-        'purchase_date',
-        'district',
-        'full_address',
         'is_available',
         'user_id',
         'cat_id',
+        'used_for',
         'description',
-        'usable_date'
+        'home_delivery',
+        'address'
     ];
 
     public function user()

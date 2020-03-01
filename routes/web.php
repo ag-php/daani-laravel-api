@@ -22,3 +22,12 @@ Route::get('/test', function () {
 });
 
 
+Route::get('/login', function () {
+    return json_encode(['a' => 'b']);
+});
+
+Route::post('/login', function () {
+    return json_encode(['a' => 'b']);
+});
+
+
