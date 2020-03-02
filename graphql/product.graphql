@@ -1,3 +1,5 @@
+scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
+
 extend type Query {
      products: [Product!]! @paginate(defaultCount: 10)
 }
@@ -7,6 +9,7 @@ extend type Mutation @middleware(checks: ["auth:api"]){
     updateProduct(id: ID!,input:UpdateProduct! @spread): Product @can(ability:"update",injectArgs: true,find:"id") @update
     deleteProduct(id: ID!): Product @can(ability:"delete",injectArgs: true,find:"id") @delete
     sold(id: ID!): Product @can(ability:"update",injectArgs: true,find:"id") @field(resolver:"Product\\Sold")
+    upload(file: Upload!): Media @field(resolver:"Media\\Create")
 }
 
 input CreateProduct{
@@ -17,6 +20,10 @@ input CreateProduct{
     cat_id: Int! @rules(apply: ["exists:product_categories,id"])
     description: String
 
+}
+
+type Media {
+    id: ID!
 }
 
 input UpdateProduct{

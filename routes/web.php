@@ -16,18 +16,3 @@ Route::get('/', function () {
 });
 
 
-
-Route::get('/test', function () {
-    return view('test');
-});
-
-
-Route::get('/login', function () {
-    return json_encode(['a' => 'b']);
-});
-
-Route::post('/login', function () {
-    return json_encode(['a' => 'b']);
-});
-
-
