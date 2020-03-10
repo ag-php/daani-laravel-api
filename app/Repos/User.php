@@ -23,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'address',
+        'phone_number',
         'fb_id',
         'api_token',
         'email_verified_at'

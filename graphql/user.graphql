@@ -10,9 +10,16 @@ extend type Mutation {
     login(email: String!, password: String): User @field(resolver:"Auth\\Login")
     verifyRegistration(token:String!): User @field(resolver:"Auth\\VerifyRegistration")
     loginWithFacebook(user_id: String!, token: String!): User @field(resolver:"Auth\\LoginWithFacebook")
+    updateUser(data: UpdateUserInput @spread) : User @middleware(checks: ["auth:api"]) @field(resolver:"User\\Update")
 
 }
 
+input UpdateUserInput {
+    name: String,
+    password: String,
+    phone_number: String,
+    address: String
+}
 
 type User {
     id: ID!
