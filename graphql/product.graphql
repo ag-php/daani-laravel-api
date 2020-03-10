@@ -1,12 +1,14 @@
 scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
 extend type Query {
-     products: [Product!]! @paginate(defaultCount: 10)
+     products: [Product!]! @all
+     verifyProductOwnership(slug: String): Product @middleware(checks: ["auth:api"]) @field(resolver:"Product\\VerifyOwnership")
+#     ownProducts: [Product!]! @middleware(checks: ["auth:api"]) @paginate(defaultCount: 10,scopes:["filter"])
 }
 
 extend type Mutation @middleware(checks: ["auth:api"]){
     addProduct(input:CreateProduct !@spread): Product @field(resolver:"Product\\Create") @inject(context: "user.id", name: "user_id")
-    updateProduct(id: ID!,input:UpdateProduct! @spread): Product @can(ability:"update",injectArgs: true,find:"id") @update
+    updateProduct(id: ID!,input:UpdateProduct @spread): Product @can(ability:"update",injectArgs: true,find:"id") @update
     deleteProduct(id: ID!): Product @can(ability:"delete",injectArgs: true,find:"id") @delete
     sold(id: ID!): Product @can(ability:"update",injectArgs: true,find:"id") @field(resolver:"Product\\Sold")
     upload(file: Upload!): Media @field(resolver:"Media\\Create")
@@ -15,7 +17,9 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 input CreateProduct{
     name: String! @rules(apply: ["string"])
     address: String @rules(apply: ["string"])
-    used_for: String @rules(apply: ["string"])
+    used_for: String! @rules(apply: ["string"])
+    cover_image: Int!
+    gallery_images: String!
     home_delivery: Int
     cat_id: Int! @rules(apply: ["exists:product_categories,id"])
     description: String
@@ -24,6 +28,12 @@ input CreateProduct{
 
 type Media {
     id: ID!
+    path: String!
+    relative_path: String!,
+    category: String!
+    created_at: DateTime
+    updated_at: DateTime
+
 }
 
 input UpdateProduct{
@@ -36,8 +46,17 @@ input UpdateProduct{
 }
 
 
+
+input ProductFilter {
+    sold: Boolean,
+    search: String,
+    slug: String
+}
+
+
 type Product {
     id: ID!
+    slug: String!
     name: String!
     description: String
     address: String!
@@ -46,4 +65,7 @@ type Product {
     is_available: Int!
     user: User
     category: ProductCategory
+    media: [Media]
+    created_at: DateTime
+    updated_at: DateTime
 }

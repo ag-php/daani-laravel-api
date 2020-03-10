@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use App\Events\Auth\UserRegistered;
+use App\Events\Product\Created;
+use App\GraphQL\Mutations\Product\Create;
 use App\Listeners\Auth\SendRegistrationEmail;
+use App\Listeners\Product\LinkUploadedImages;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -23,6 +26,10 @@ class EventServiceProvider extends ServiceProvider
 
         UserRegistered::class => [
             SendRegistrationEmail::class
+        ],
+
+        Created::class => [
+            LinkUploadedImages::class
         ]
     ];
 

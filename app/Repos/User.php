@@ -104,6 +104,11 @@ class User extends Authenticatable
 
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class,'user_id','id');
+    }
+
     public function media()
     {
         return $this->morphMany(Media::class, 'subject');

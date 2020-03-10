@@ -3,6 +3,7 @@
 namespace App\GraphQL\Mutations\Product;
 
 use App\Events\Auth\UserRegistered;
+use App\Events\Product\Created;
 use App\GraphQL\Queries\User;
 use App\Repos\Product;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -24,6 +25,10 @@ class Create
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        return Product::create($args);
+        $product = Product::create($args);
+
+        event(new Created($product,$args));
+
+        return $product;
     }
 }

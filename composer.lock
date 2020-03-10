@@ -2225,6 +2225,7 @@
                 "request",
                 "spatie"
             ],
+            "abandoned": "laravel/framework",
             "time": "2019-09-04T06:55:15+00:00"
         },
         {

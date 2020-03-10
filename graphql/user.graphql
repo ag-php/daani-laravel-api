@@ -1,12 +1,12 @@
 extend type Query {
     users: [User!]! @paginate(defaultCount: 10)
     me: User @auth(guard:"api")
+
 }
 
 
 extend type Mutation {
     register(email : String @rules(apply: ["required","string","email","unique:users,email"]),password : String @rules(apply: ["required","string"])) : User @field(resolver: "Auth\\Register")
-
     login(email: String!, password: String): User @field(resolver:"Auth\\Login")
     verifyRegistration(token:String!): User @field(resolver:"Auth\\VerifyRegistration")
     loginWithFacebook(user_id: String!, token: String!): User @field(resolver:"Auth\\LoginWithFacebook")
@@ -21,4 +21,5 @@ type User {
     api_token: String!
     created_at: DateTime!
     updated_at: DateTime!
+    products(filter: ProductFilter): [Product!]! @hasMany(type:"paginator",scopes:["filter"])
 }

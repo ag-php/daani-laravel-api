@@ -32,7 +32,7 @@ return [
          */
         'middleware' => [
             \Nuwave\Lighthouse\Support\Http\Middleware\AcceptJson::class,
-            \Spatie\Cors\Cors::class
+            \Spatie\Cors\Cors::class,
 
         ],
 
