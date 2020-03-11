@@ -10,7 +10,6 @@ class ProductPolicy
 {
     use HandlesAuthorization;
 
-
     public function update(User $user, Product $product)
     {
         return $user->getId() === $product->getUserId();
