@@ -27,6 +27,7 @@ class VerifyRegistration
 
         $user = \App\Repos\User::byToken(base64_decode($args['token']))->first();
 
+
         if ($user && !$user->isVerified()) {
             $user->update(['email_verified_at' => Carbon::now()]);
 

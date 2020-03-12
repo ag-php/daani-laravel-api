@@ -3,6 +3,7 @@
 namespace App\GraphQL\Mutations\Auth;
 
 use App\Events\Auth\UserRegistered;
+use App\Exceptions\Login\NotVerified;
 use App\GraphQL\Queries\User;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Arr;
@@ -26,7 +27,13 @@ class Login
         $data = Arr::only($args, ['email','password']);
         $user = new \App\Repos\User();
         if(Auth::once($data)) {
-           return $user->completeSuccessfulLogin();
+
+            $user = Auth::user();
+            if($user->isVerified()) {
+                return $user->completeSuccessfulLogin();
+            }
+
+            throw new NotVerified();
 
         }
         throw new \App\Exceptions\Login\InvalidCredentials();

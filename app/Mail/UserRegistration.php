@@ -28,7 +28,7 @@ class UserRegistration extends Mailable
 
     public function getVerificationLink() : string
     {
-        $url = env('FRONTEND_APP_URL').'?code='.base64_encode($this->user->getApiToken());
+        $url = env('FRONTEND_APP_URL').'/token/'.base64_encode($this->user->getApiToken()).'/verify';
 
         Log::info("verification token generated",[
             'userId' => $this->user->getId()
