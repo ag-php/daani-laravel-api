@@ -11,6 +11,44 @@ class ProductCategorySeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Repos\ProductCategory::class,10)->create();
+        $categories = [
+            'Clothes' => [
+                'Bags',
+                'Mens Clothing',
+                'Mens Shoes',
+                'Womens Clothing',
+                'Womens Shoes',
+                'Watches',
+                'Sunglasses',
+                'Others'
+            ],
+            'Electronics',
+            'Furniture',
+            'Toys',
+            'Books',
+            'Stationery',
+            'Others',
+            'Foods' => [
+                'Vegetables',
+                'Fruits',
+                'Others'
+            ]
+        ];
+
+        foreach($categories as $key => $value) {
+
+            if(is_int($key)) {
+                \App\Repos\ProductCategory::create(['name' => $value]);
+                continue;
+            }
+
+            $parenCategory = \App\Repos\ProductCategory::create(['name' => $key]);
+
+
+            foreach($value as $childCategory) {
+                 \App\Repos\ProductCategory::create(['name' => $childCategory,'parent_id' => $parenCategory->id]);
+            }
+
+        }
     }
 }
