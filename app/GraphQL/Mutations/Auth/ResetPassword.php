@@ -9,7 +9,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Str;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class ForgotPassword
+class ResetPassword
 {
     /**
      * Return a value for the field.
@@ -22,17 +22,16 @@ class ForgotPassword
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $user = User::byEmail($args['email'])->first();
-        if ($user) {
-            if (!$user->getApiToken()) {
-                $user->update(['api_token' => $user->generateAuthToken()]);
+        if ($args['token'] && $args['password']) {
+            $token = base64_decode($args['token']);
+            $user = User::ByToken($token)->first();
+            if ($user) {
+                $user->update(['password' => $args['password']]);
+                return true;
             }
-            event(new RequestedPasswordReset($user));
-
-            return true;
         }
 
-        return true;
+        return null;
 
 
     }
