@@ -60,7 +60,7 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function getApiToken(): string
+    public function getApiToken(): ?string
     {
         return $this->api_token;
     }
@@ -89,6 +89,11 @@ class User extends Authenticatable
     public function scopeByFbId($q,$fbId)
     {
         return $q->where('fb_id', $fbId);
+    }
+
+    public function scopeByEmail($q,$email)
+    {
+        return $q->where('email', $email);
     }
 
     public function generateAuthToken() : String
