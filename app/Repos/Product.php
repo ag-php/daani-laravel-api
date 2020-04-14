@@ -29,10 +29,9 @@ class Product extends Model implements HasMediaInterface
         return $this->belongsTo(User::class);
     }
 
-    public function setNameAttribute($value)
+    public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = $this->createSlug($value);
-        $this->attributes['name'] = $value;
     }
 
     public function createSlug($title, $id = 0)

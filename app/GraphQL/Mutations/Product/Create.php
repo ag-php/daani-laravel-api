@@ -25,6 +25,7 @@ class Create
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
+        $args['slug'] = $args['name'];
         $product = Product::create($args);
 
         event(new Created($product,$args));

@@ -4,9 +4,6 @@ type Query {
 
 
 type Mutation {
-#    register(email : String @rules(apply: ["required","string","email","unique:users,email"]),
-#        password : String @rules(apply: ["required","string"])) : User @field(resolver: "Auth\\Register")
-
     addProduct(email: String!, password: String): User @field(resolver:"Auth\\Login")
 
 }
