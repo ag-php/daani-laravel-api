@@ -19,11 +19,11 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->string('description')->nullable();
             $table->string('used_for');
-            $table->string('is_available')->default(1);
-            $table->string('home_delivery')->default(0);
+            $table->integer('is_available')->default(1);
+//            $table->string('home_delivery')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('address')->nullable();
+//            $table->string('address')->nullable();
             $table->timestamps();
         });
     }
