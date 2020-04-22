@@ -77,13 +77,21 @@ class Product extends Model implements HasMediaInterface
         return $this->user_id;
     }
 
+    public function scopeSold($q)
+    {
+        return $q->where('is_available', 0);
+    }
+
     public function ScopeFilter($q, $args)
     {
         if (isset($args['filter'])) {
             $filter = $args['filter'];
 
-            if (isset($filter['sold'])) {
+            if (isset($filter['sold']) && $filter['sold']) {
                 $q->where('is_available', 0);
+            }
+            if (!isset($filter['sold']) || !$filter['sold']) {
+                $q->where('is_available', 1);
             }
 
             if (isset($filter['search'])) {
@@ -96,16 +104,18 @@ class Product extends Model implements HasMediaInterface
             }
 
         }
+
+        return $q;
     }
 
-    public function scopeBySlug($q,$slug)
+    public function scopeBySlug($q, $slug)
     {
-        return $q->where('slug',$slug);
+        return $q->where('slug', $slug);
     }
 
-    public function scopeByUser($q,$userId)
+    public function scopeByUser($q, $userId)
     {
-        return $q->where('user_id',$userId);
+        return $q->where('user_id', $userId);
     }
 
     public function getSizes(): array

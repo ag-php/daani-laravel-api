@@ -1,0 +1,9 @@
+extend type Query {
+    stat: Stat @field(resolver:"Report\\Stat")
+}
+
+type Stat {
+    total_products: Int
+    total_users: Int
+    total_sold_products: Int
+}

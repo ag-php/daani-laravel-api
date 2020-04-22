@@ -25,3 +25,4 @@ type Comment {
 #import product.graphql
 #import user.graphql
 #import order.graphql
+#import stat.graphql
