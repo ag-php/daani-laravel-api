@@ -103,6 +103,18 @@ class Product extends Model implements HasMediaInterface
                 $q->where('slug', $filter['slug']);
             }
 
+            if (isset($filter['catId'])) {
+
+                $catId = $filter['catId'];
+                $q->whereIn('cat_id',function($query) use ($catId) {
+                    $query->select('id')->from('product_categories')->where('parent_id',$catId);
+                });
+            }
+
+            if (isset($filter['latest'])) {
+                $q->orderByDesc('created_at');
+            }
+
         }
 
         return $q;

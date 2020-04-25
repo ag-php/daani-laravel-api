@@ -1,7 +1,7 @@
 scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
 
 extend type Query {
-     products: [Product!]! @paginate
+     products(filter: ProductFilter): [Product!]! @paginate(scopes: ["filter"])
      verifyProductOwnership(slug: String): Product @middleware(checks: ["auth:api"]) @field(resolver:"Product\\VerifyOwnership")
 #     ownProducts: [Product!]! @middleware(checks: ["auth:api"]) @paginate(defaultCount: 10,scopes:["filter"])
 }
@@ -52,7 +52,9 @@ input UpdateProduct{
 input ProductFilter {
     sold: Boolean,
     search: String,
-    slug: String
+    slug: String,
+    catId: Int,
+    latest: Boolean
 }
 
 
