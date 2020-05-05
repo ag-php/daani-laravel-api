@@ -32,7 +32,7 @@ class MediaController extends Controller
             ]);
             $imageUploader->upload();
             $media = $media->store($imageUploader,$properties);
-            $mediaIds[] = $media->id;
+            $mediaIds[$media->id] = $media->path;
         }
 
         return response(['status' =>'success','data' => $mediaIds]);
