@@ -139,4 +139,5 @@ class Product extends Model implements HasMediaInterface
     {
         return $this->morphMany(Media::class, 'subject');
     }
+
 }
