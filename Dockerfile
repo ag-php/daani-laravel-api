@@ -1,18 +1,11 @@
-
-FROM composer:1.9.0 as build
-WORKDIR /app
-COPY . /app
-RUN composer global require hirak/prestissimo && composer install
-
-FROM php:7.3-apache-stretch
-RUN docker-php-ext-install pdo pdo_mysql
-
-EXPOSE 8080
-COPY --from=build /app /var/www/
-COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY .env.example /var/www/.env
-RUN chmod 777 -R /var/www/storage/ && \
-    php /var/www/artisan vendor:publish --provider="Nuwave\Lighthouse\LighthouseServiceProvider" --tag=schema && \
-    echo "Listen 8080" >> /etc/apache2/ports.conf && \
-    chown -R www-data:www-data /var/www/ && \
-    a2enmod rewrite
+FROM gcr.io/pvstaging/nginx-php7-fpm:7.2-stage
+ADD ./docker/sites/default-live.conf /etc/nginx/sites-enabled/default
+ADD ./docker/conf/supervisord.conf /supervisord.conf
+RUN cat /supervisord.conf >> /etc/supervisor/conf.d/supervisord.conf
+WORKDIR /var/www
+ADD ./ /var/www/
+RUN composer install --no-dev && composer du -o
+RUN touch /var/www/storage/logs/laravel.log
+RUN chown -Rf www-data.www-data /var/www/
+EXPOSE 80
+ENTRYPOINT ["/bin/bash","/start.sh"]
