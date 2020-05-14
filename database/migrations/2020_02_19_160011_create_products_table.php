@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('description')->nullable();
-            $table->string('used_for');
+//            $table->string('used_for');
             $table->integer('is_available')->default(1);
 //            $table->string('home_delivery')->default(0);
             $table->unsignedBigInteger('user_id');

@@ -17,7 +17,6 @@ extend type Mutation @middleware(checks: ["auth:api"]){
 input CreateProduct{
     name: String! @rules(apply: ["string"])
     address: String @rules(apply: ["string"])
-    used_for: String! @rules(apply: ["string"])
     cover_image: Int!
     gallery_images: String
     home_delivery: Int

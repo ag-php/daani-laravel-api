@@ -7,7 +7,6 @@ ADD ./ /var/www/
 RUN composer install --no-dev && composer du -o
 RUN touch /var/www/storage/logs/laravel.log
 RUN chown -Rf www-data.www-data /var/www/
-RUN  /var/wwwphp artisan storage:link
 
 EXPOSE 80
 ENTRYPOINT ["/bin/bash","/start.sh"]
