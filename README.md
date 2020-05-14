@@ -1,3 +1,4 @@
+![Build and Deploy to Cloud Run](https://github.com/ujwaldhakal/things-for-granted-api/workflows/Build%20and%20Deploy%20to%20Cloud%20Run/badge.svg)
 ## Free Giveaway
 
 Since we are throwing away many consumable goods which could have been helpful for others. 
@@ -30,3 +31,4 @@ your products and the one who will need will contact you. Lets spread the happin
 * If you want to request any feature just create a feature tag issue
 * All codes must tested well on local machine before pushing it to production
  
+
