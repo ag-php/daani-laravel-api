@@ -2,6 +2,7 @@
 
 namespace App\GraphQL\Mutations\Auth;
 
+use App\Events\Auth\RequestedEmailVerificationLink;
 use App\Events\Auth\UserRegistered;
 use App\GraphQL\Queries\User;
 use Carbon\Carbon;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class VerifyRegistration
+class RequestEmailVerificationLink
 {
     /**
      * Return a value for the field.
@@ -25,13 +26,15 @@ class VerifyRegistration
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
 
-        $user = \App\Repos\User::byToken(base64_decode($args['token']))->first();
+        $user = \App\Repos\User::byEmail($args['email'])->first();
 
-        if ($user && !$user->isVerified()) {
-            $user->update(['email_verified_at' => Carbon::now()]);
+        if ($user && !$user->isVerified() && $user->canRequestForEmailVerificationLink()) {
 
+            event(new RequestedEmailVerificationLink($user));
+            $user->update(['requested_verification_link_count' => $user->getRequestedVerificationLinkCount()+1 ]);
             return $user;
         }
-        return null;
+
+        return false;
     }
 }

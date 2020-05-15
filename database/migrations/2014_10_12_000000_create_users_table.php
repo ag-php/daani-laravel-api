@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable();
             $table->string('fb_id')->nullable();
             $table->integer('role_id')->default(2);
+            $table->integer('district_id')->default(0);
+            $table->integer('requested_verification_link_count')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,6 +37,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+
         Schema::dropIfExists('users');
     }
 }

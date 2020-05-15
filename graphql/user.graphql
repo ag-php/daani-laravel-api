@@ -7,7 +7,7 @@ extend type Query {
 
 extend type Mutation {
     register(email : String @rules(apply: ["required","string","email","unique:users,email"]),
-        password : String @rules(apply: ["required","string"])) : User @field(resolver: "Auth\\Register")
+    password : String @rules(apply: ["required","string"])) : User @field(resolver: "Auth\\Register")
     login(email: String!, password: String): User @field(resolver:"Auth\\Login")
     verifyRegistration(token:String!): User @field(resolver:"Auth\\VerifyRegistration")
     validateResetToken(token:String!): User @field(resolver:"Auth\\ValidateResetToken")
@@ -15,6 +15,7 @@ extend type Mutation {
     updateUser(data: UpdateUserInput @spread) : User @middleware(checks: ["auth:api"]) @field(resolver:"User\\Update")
     forgotPassword(email:String!): String @field(resolver:"Auth\\ForgotPassword")
     resetPassword(token: String!,password:String!): String @field(resolver:"Auth\\ResetPassword")
+    requestEmailVerificationLink(email:String!): Boolean @field(resolver:"Auth\\RequestEmailVerificationLink")
 
 
 }

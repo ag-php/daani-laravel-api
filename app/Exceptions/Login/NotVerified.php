@@ -22,6 +22,7 @@ class NotVerified extends \Exception implements RendersErrorsExtensions
     public function extensionsContent(): array
     {
         return [
+            'verified' => false,
             'reason' => $this->reason,
         ];
     }
