@@ -7,7 +7,7 @@ use App\Mail\EmailVerification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendEmailVerification implements ShouldQueue
+class SendEmailVerification
 {
     public function handle( $event)
     {

@@ -10,11 +10,11 @@ extend type Mutation {
     password : String @rules(apply: ["required","string"])) : User @field(resolver: "Auth\\Register")
     login(email: String!, password: String): User @field(resolver:"Auth\\Login")
     verifyRegistration(token:String!): User @field(resolver:"Auth\\VerifyRegistration")
-    validateResetToken(token:String!): User @field(resolver:"Auth\\ValidateResetToken")
+    validateResetToken(token:String!): Boolean @field(resolver:"Auth\\ValidateResetToken")
     loginWithFacebook(user_id: String!, token: String!): User @field(resolver:"Auth\\LoginWithFacebook")
     updateUser(data: UpdateUserInput @spread) : User @middleware(checks: ["auth:api"]) @field(resolver:"User\\Update")
     forgotPassword(email:String!): Boolean @field(resolver:"Auth\\ForgotPassword")
-    resetPassword(token: String!,password:String!): String @field(resolver:"Auth\\ResetPassword")
+    resetPassword(token: String!,password:String!): Boolean @field(resolver:"Auth\\ResetPassword")
     requestEmailVerificationLink(email:String!): Boolean @field(resolver:"Auth\\RequestEmailVerificationLink")
 
 
