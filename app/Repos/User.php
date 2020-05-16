@@ -27,7 +27,9 @@ class User extends Authenticatable
         'phone_number',
         'fb_id',
         'api_token',
-        'email_verified_at'
+        'email_verified_at',
+        'district_id',
+        'requested_verification_link_count'
     ];
 
     /**
@@ -70,6 +72,8 @@ class User extends Authenticatable
         return $q->where('api_token',$token);
     }
 
+
+
     public function isVerified() : bool
     {
         return !empty($this->email_verified_at);
@@ -111,6 +115,15 @@ class User extends Authenticatable
 
     }
 
+    public function canRequestForEmailVerificationLink() : bool
+    {
+        return $this->getRequestedVerificationLinkCount() < 3;
+    }
+
+    public function getRequestedVerificationLinkCount() : int
+    {
+        return $this->requested_verification_link_count;
+    }
 
 
     public function products()

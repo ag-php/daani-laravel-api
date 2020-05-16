@@ -11,7 +11,6 @@ $factory->define(\App\Repos\Product::class, function (Faker $faker) {
         'name' => $faker->name,
         'slug' => $faker->name,
         'description' => $faker->name,
-        'used_for' => $faker->name,
 //        'address' => $faker->imageUrl(),
         'is_available' => 1,
         'user_id' => \App\Repos\User::all()->random(1)->first()->id,

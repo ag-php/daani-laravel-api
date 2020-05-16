@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\Auth\RequestedEmailVerificationLink;
 use App\Events\Auth\RequestedPasswordReset;
 use App\Events\Auth\UserRegistered;
 use App\Events\Product\Created;
 use App\GraphQL\Mutations\Product\Create;
+use App\Listeners\Auth\SendEmailVerification;
 use App\Listeners\Auth\SendPasswordResetEmail;
 use App\Listeners\Auth\SendRegistrationEmail;
 use App\Listeners\Product\LinkUploadedImages;
@@ -29,6 +31,11 @@ class EventServiceProvider extends ServiceProvider
         RequestedPasswordReset::class => [
             SendPasswordResetEmail::class
         ],
+
+        RequestedEmailVerificationLink::class => [
+          SendEmailVerification::class
+        ],
+
         UserRegistered::class => [
             SendRegistrationEmail::class
         ],

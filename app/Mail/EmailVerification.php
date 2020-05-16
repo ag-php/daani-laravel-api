@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class UserRegistration extends Mailable
+class EmailVerification extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -43,6 +43,6 @@ class UserRegistration extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.auth.registration')->with(['verificationLink' => $this->getVerificationLink()]);
+        return $this->markdown('emails.auth.email-verification')->with(['verificationLink' => $this->getVerificationLink()]);
     }
 }
