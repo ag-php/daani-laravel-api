@@ -32,7 +32,7 @@ class ForgotPassword
             return true;
         }
 
-        return true;
+        return false;
 
 
     }
