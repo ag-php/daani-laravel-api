@@ -27,6 +27,16 @@ input UpdateUserInput {
     address: String
 }
 
+type PublicUser {
+    id: ID!
+    name: String
+    email: String!
+    phone_number: String
+    address: String
+    created_at: DateTime!
+    products(filter: ProductFilter): [Product!]! @hasMany(type:"paginator",scopes:["filter"])
+}
+
 type User {
     id: ID!
     name: String

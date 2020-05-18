@@ -66,7 +66,7 @@ type Product {
     used_for: String!
     home_delivery: String!
     is_available: Int!
-    user: User
+    user: PublicUser
     category: ProductCategory
     cat_id: Int!
     media: [Media]
