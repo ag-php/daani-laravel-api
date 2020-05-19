@@ -8,7 +8,7 @@ extend type Query {
 
 extend type Mutation @middleware(checks: ["auth:api"]){
     addProduct(input:CreateProduct !@spread): Product @field(resolver:"Product\\Create") @inject(context: "user.id", name: "user_id")
-    updateProduct(id: ID!,input:UpdateProduct @spread): Product @can(ability:"update",injectArgs: true,find:"id") @update
+    updateProduct(id: ID!,input:UpdateProduct @spread): Product @can(ability:"update",injectArgs: true,find:"id") @field(resolver:"Product\\Update")
     deleteProduct(id: ID!): Product @can(ability:"delete",injectArgs: true,find:"id") @delete
     sold(id: ID!): Product @can(ability:"update",injectArgs: true,find:"id") @field(resolver:"Product\\Sold")
     upload(file: Upload!): Media @field(resolver:"Media\\Create")
@@ -19,7 +19,6 @@ input CreateProduct{
     address: String @rules(apply: ["string"])
     cover_image: Int!
     gallery_images: String
-    home_delivery: Int
     cat_id: Int! @rules(apply: ["exists:product_categories,id"])
     description: String
 
@@ -30,6 +29,7 @@ type Media {
     path: String!
     relative_path: String!,
     category: String!
+    subject_type: String!
     created_at: DateTime
     updated_at: DateTime
 
