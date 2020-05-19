@@ -29,8 +29,8 @@ class ValidateResetToken
 
 
         if ($user) {
-            return $user;
+            return true;
         }
-        return null;
+        return false;
     }
 }

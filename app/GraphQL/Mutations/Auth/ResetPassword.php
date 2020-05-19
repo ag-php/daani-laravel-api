@@ -31,7 +31,7 @@ class ResetPassword
             }
         }
 
-        return null;
+        return false;
 
 
     }

@@ -28,7 +28,7 @@ class PasswordReset extends Mailable
 
     public function getVerificationLink() : string
     {
-        $url = env('FRONTEND_APP_URL').'/token/'.base64_encode($this->user->getApiToken()).'/reset-password';
+        $url = env('FRONTEND_APP_URL').'/reset-password?token='.base64_encode($this->user->getApiToken()).'';
 
         Log::info("verification token generated",[
             'userId' => $this->user->getId()
@@ -43,6 +43,6 @@ class PasswordReset extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.auth.passwordreset')->with(['verificationLink' => $this->getVerificationLink()]);
+        return $this->markdown('emails.auth.passwordreset')->with(['verificationLink' => $this->getVerificationLink(),'email' => $this->user->getEmail()]);
     }
 }
