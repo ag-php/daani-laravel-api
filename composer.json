@@ -17,7 +17,8 @@
         "mll-lab/laravel-graphql-playground": "^2.0",
         "nuwave/lighthouse": "^4.8",
         "pagevamp/request-out": "^0.0.4",
-        "spatie/laravel-cors": "^1.6"
+        "spatie/laravel-cors": "^1.6",
+        "superbalist/laravel-google-cloud-storage": "^2.2"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

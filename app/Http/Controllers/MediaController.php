@@ -10,6 +10,7 @@ use App\Repos\Media;
 use App\Services\Media\Uploader as MediaUploader;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MediaController extends Controller
 {
