@@ -17,5 +17,4 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
-
 Route::post('media',"MediaController@store")->middleware('api');
