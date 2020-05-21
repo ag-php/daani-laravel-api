@@ -17,6 +17,7 @@ class MediaController extends Controller
     public function store(Request $request, Media $media)
     {
 
+        Log::info('secret key loggin ok',['key' => str_replace('\n', "\n", base64_decode(env('GOOGLE_CLOUD_PRIVATE_KEY')))]);
         $files = $request->file('files');
         $mediaIds = [];
         foreach ($files as $key => $file) {
