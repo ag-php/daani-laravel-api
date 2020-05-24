@@ -40,7 +40,7 @@ type PublicUser {
 type User {
     id: ID!
     name: String
-    email: String!
+    email: String
     phone_number: String
     address: String
     api_token: String!

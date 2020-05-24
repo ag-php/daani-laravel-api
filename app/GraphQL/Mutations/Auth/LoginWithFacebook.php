@@ -33,6 +33,7 @@ class LoginWithFacebook
             'accessToken' => $args['token']
         ]);
 
+
         if($userInfo = $graphApi->getUserInfo()) {
 
             $user = $userRepo->ByFbId($userInfo['id'])->first();
