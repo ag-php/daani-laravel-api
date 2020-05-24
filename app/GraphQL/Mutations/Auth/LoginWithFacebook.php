@@ -46,6 +46,7 @@ class LoginWithFacebook
 
 
             $email = isset($userInfo['email']) ?  $userInfo['email'] : null;
+            $name = isset($userInfo['name']) ?  $userInfo['name'] : null;
 
             $data = [
                 'fb_id' => $userInfo['id'],
@@ -56,6 +57,10 @@ class LoginWithFacebook
             if(!empty($email)) {
                 $data['email'] = $email;
                 $data['email_verified_at'] = Carbon::now();
+            }
+
+            if(!empty($name)) {
+                $data['name'] = $name;
             }
 
             $user = $userRepo->create($data);
