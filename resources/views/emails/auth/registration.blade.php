@@ -26,9 +26,9 @@
                         </a>
 
                         <p></p>
-                        <p style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
+                        < style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
 
-                            If you have any problem verifying your account, feel free to contact us at support@daani.life
+                        If you have any problem verifying your account, feel free to contact us at <a href="mailto:daaniteam@gmail.com"> daaniteam@gmail.com </a>
                         </p>
                         <p style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #74787e; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
                             Thanks,<br>
