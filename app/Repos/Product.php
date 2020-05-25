@@ -109,6 +109,9 @@ class Product extends Model implements HasMediaInterface
                 $q->whereIn('cat_id',function($query) use ($catId) {
                     $query->select('id')->from('product_categories')->where('parent_id',$catId);
                 });
+                $q->orwhereIn('cat_id',function($query) use ($catId) {
+                    $query->select('id')->from('product_categories')->where('id',$catId);
+                });
             }
 
             if (isset($filter['latest'])) {
