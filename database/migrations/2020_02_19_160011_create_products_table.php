@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
 //            $table->string('used_for');
             $table->integer('is_available')->default(1);
 //            $table->string('home_delivery')->default(0);
